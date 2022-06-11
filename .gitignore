@@ -1,0 +1,8 @@
+# Do not commit binaries.
+bin
+
+# Ignore any existing override, so that secrets are not committed by accident.
+config/dev.env
+
+# For macOS, avoid committing the ever-existing .DS_Store.
+.DS_Store
