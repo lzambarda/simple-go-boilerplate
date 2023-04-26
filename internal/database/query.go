@@ -2,8 +2,7 @@ package database
 
 import (
 	"embed"
-
-	"github.com/pkg/errors"
+	"fmt"
 )
 
 // Make sure that queries are embedded in the built binary and are easily
@@ -25,7 +24,7 @@ func init() {
 	queries = map[string]string{}
 	b, err := queryFS.ReadFile(queryFooName)
 	if err != nil {
-		panic(errors.Wrapf(err, "reading %s", queryFooName))
+		panic(fmt.Errorf("reading %s: %w", queryFooName, err))
 	}
 	queries[queryFooName] = string(b)
 }

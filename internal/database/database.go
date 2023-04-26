@@ -6,8 +6,8 @@ package database
 
 import (
 	"database/sql"
-
-	"github.com/pkg/errors"
+	"errors"
+	"fmt"
 )
 
 // Database is the structure used to interact with the database. Obtain a working
@@ -31,7 +31,7 @@ func NewDatabase() (db *Database, err error) {
 func (db *Database) DoSomething() (res string, err error) {
 	err = db.handle.QueryRow(queries[queryFooName]).Scan(&res)
 	if err != nil {
-		return "", errors.Wrap(err, "query row")
+		return "", fmt.Errorf("query row: %w", err)
 	}
 
 	return res, nil
