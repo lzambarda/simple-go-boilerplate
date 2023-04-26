@@ -10,10 +10,12 @@ const (
 	fooName = "FOO"
 )
 
-var (
-	Foo string
-)
+var Foo string
 
-func init() {
+// LoadEnv loads both environment variables and flags. This is not done inside
+// an init function so that we can control when things are initialised.
+func LoadEnv() error {
 	Foo = os.Getenv(fooName)
+
+	return nil
 }
