@@ -5,6 +5,7 @@
 //
 // If this is an unnecessary layer, this package can be discarded and the
 // logging library can be used directly elsewhere.
+//
 //nolint:depguard // Allow the dependency here.
 package logger
 
@@ -37,4 +38,9 @@ func Warningf(msg string, args ...interface{}) {
 // Errorf prints a message on the info level.
 func Errorf(msg string, args ...interface{}) {
 	log.Printf(msg, args...)
+}
+
+// Fatalf prints a and then calls os.Exit(1)
+func Fatalf(msg string, args ...interface{}) {
+	log.Fatalf(msg, args...)
 }
