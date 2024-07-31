@@ -5,12 +5,12 @@
 // You can create several entrypoints by creating different folder in here and
 // have a package main in each one:
 //
-//  cmd
-//  ├── foo
-//  │   ├── main.go
-//  │   └── foo.go
-//  └── bar
-//      └── main.go
+//	cmd
+//	├── foo
+//	│   ├── main.go
+//	│   └── foo.go
+//	└── bar
+//	    └── main.go
 //
 // With the above layout you can then build separate binaries such as:
 //

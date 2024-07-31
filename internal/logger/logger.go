@@ -17,7 +17,7 @@ import (
 // Init carries on any initialisation needed by the logger of choice.
 // Here is where you could pass a level argument and use it.
 func Init() error {
-	return errors.New("not implemented")
+	return errors.New("not implemented") //nolint:err113 // Fine here.
 }
 
 // Debugf prints a message on the debug level.
@@ -40,7 +40,7 @@ func Errorf(msg string, args ...interface{}) {
 	log.Printf(msg, args...)
 }
 
-// Fatalf prints a and then calls os.Exit(1)
+// Fatalf prints a and then calls os.Exit(1).
 func Fatalf(msg string, args ...interface{}) {
 	log.Fatalf(msg, args...)
 }

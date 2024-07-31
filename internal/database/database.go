@@ -22,9 +22,9 @@ type Database struct {
 	handle sql.DB
 }
 
-// NewDatabase returns a usable instance of the Database structure.
-func NewDatabase() (db *Database, err error) {
-	return nil, errors.New("not implemented")
+// New returns a usable instance of the Database structure.
+func New() (db *Database, err error) {
+	return nil, errors.New("not implemented") //nolint:err113 // Fine here.
 }
 
 // DoSomething does what is written on the tin.

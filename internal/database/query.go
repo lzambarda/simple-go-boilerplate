@@ -20,6 +20,7 @@ const (
 	queryFooName = "query/foo.sql"
 )
 
+//nolint:gochecknoinits // Sometimes they can be helpful.
 func init() {
 	queries = map[string]string{}
 	b, err := queryFS.ReadFile(queryFooName)
