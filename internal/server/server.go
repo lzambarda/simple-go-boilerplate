@@ -6,11 +6,9 @@ import (
 	"errors"
 )
 
-var (
-	// ErrNoDatabase is returned if NewServer is used with a nil database
-	// argument.
-	ErrNoDatabase = errors.New("no database")
-)
+// ErrNoDatabase is returned if NewServer is used with a nil database
+// argument.
+var ErrNoDatabase = errors.New("no database")
 
 // Server is the structure used to create a working server. Obtain a working
 // instance with NewServer.
@@ -18,8 +16,8 @@ type Server struct {
 	db Database
 }
 
-// NewDatabase returns a usable instance of the Database structure.
-func NewServer(db Database) (srv *Server, err error) {
+// New returns a usable instance of the Database structure.
+func New(db Database) (srv *Server, err error) {
 	if db == nil {
 		return nil, ErrNoDatabase
 	}
@@ -30,6 +28,7 @@ func NewServer(db Database) (srv *Server, err error) {
 	return srv, nil
 }
 
+//nolint:unused // Fine here.
 func (s *Server) unexportedMethod() bool {
 	return true
 }
