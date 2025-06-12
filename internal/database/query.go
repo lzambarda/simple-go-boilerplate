@@ -14,6 +14,8 @@ import (
 
 //go:embed query
 var queryFS embed.FS
+
+//nolint:gochecknoglobals // Fine in this example.
 var queries map[string]string
 
 const (
@@ -23,9 +25,11 @@ const (
 //nolint:gochecknoinits // Sometimes they can be helpful.
 func init() {
 	queries = map[string]string{}
+
 	b, err := queryFS.ReadFile(queryFooName)
 	if err != nil {
 		panic(fmt.Errorf("reading %s: %w", queryFooName, err))
 	}
+
 	queries[queryFooName] = string(b)
 }

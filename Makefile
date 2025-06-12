@@ -24,8 +24,7 @@ endif
 
 .PHONY: dependencies
 dependencies: ## Install dependencies needed to work on this repo
-	@go install mvdan.cc/gofumpt@latest
-	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	@go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2
 
 
 .PHONY: run
@@ -37,7 +36,6 @@ run: ## Example: make run env={env file} cmd={cmd} flags={flags}
 # This can be quite taxing, you don't need to have any linting set up.
 .PHONY: lint
 lint: ## Run various linters
-	gofumpt -w -l .
 	golangci-lint run ./...
 
 

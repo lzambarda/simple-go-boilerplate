@@ -23,13 +23,15 @@ type Database struct {
 }
 
 // New returns a usable instance of the Database structure.
-func New() (db *Database, err error) {
+func New() (*Database, error) {
 	return nil, errors.New("not implemented") //nolint:err113 // Fine here.
 }
 
 // DoSomething does what is written on the tin.
-func (db *Database) DoSomething() (res string, err error) {
-	err = db.handle.QueryRow(queries[queryFooName]).Scan(&res)
+func (db *Database) DoSomething() (string, error) {
+	var res string
+
+	err := db.handle.QueryRow(queries[queryFooName]).Scan(&res)
 	if err != nil {
 		return "", fmt.Errorf("query row: %w", err)
 	}

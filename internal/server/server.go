@@ -17,11 +17,12 @@ type Server struct {
 }
 
 // New returns a usable instance of the Database structure.
-func New(db Database) (srv *Server, err error) {
+func New(db Database) (*Server, error) {
 	if db == nil {
 		return nil, ErrNoDatabase
 	}
-	srv = &Server{
+
+	srv := &Server{
 		db: db,
 	}
 

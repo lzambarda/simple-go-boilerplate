@@ -1,111 +1,118 @@
-# Note this is just based on what I am comfortable with.
-# It changes depending on the project and I included it just because I know
-# golangci config files can be gargantuan.
-#
-# Note that you don't have to use golangci if you feel it's too taxing.
-linters-settings:
-  funlen:
-    lines: 110
-    statements: 70
-  gci:
-    sections:
-      - standard
-      - default
-      - prefix(github.com/ORGNAME) # change this!
-      - localmodule
-    custom-order: true
-  goconst:
-    min-len: 2
-    min-occurrences: 2
-  gocritic:
-    enabled-tags:
-      - diagnostic
-      - experimental
-      - opinionated
-      - performance
-      - style
-  gocyclo:
-    min-complexity: 15
-  cyclop:
-    skip-tests: true
-    max-complexity: 15
-  godot:
-    capital: true
-  goimports:
-    local-prefixes: github.com/ORGNAME/REPONAME # change this!
-  govet:
-    settings:
-      printf:
-        funcs:
-          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Infof
-          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Warnf
-          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Errorf
-          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Fatalf
-    disable:
-      - fieldalignment
-  lll:
-    line-length: 140
-  misspell:
-    locale: UK
-  tagliatelle:
-    case:
-      rules:
-        json: snake
-  unparam:
-    check-exported: true
-  varnamelen:
-    min-name-length: 2
-  wsl:
-    allow-cuddle-declarations: true
-
-issues:
-  # Excluding configuration per-path, per-linter, per-text and per-source
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - bodyclose
-        - dupl # we usually duplicate code in tests
-        - errcheck
-        - funlen
-        - gochecknoglobals # fine in tests if we need to stub things
-        - goconst # sometimes it is easier this way
-        - gocritic
-        - gosec # security check is not important in tests
-        - govet
-        - lll # Some strings may be very long
-        - maintidx
-        - paralleltest
-        - revive
-        - unparam
-        - varnamelen # whatever is easier for the dev
-        - wrapcheck
-    - path: testing
-      linters:
-        - errcheck
-  fix: false
-  exclude-use-default: false
-  exclude-dirs:
-    - model
-    - tmp
-    - bin
-    - scripts
-
+version: "2"
 run:
-  allow-parallel-runners: true
-  tests: true
   build-tags:
     - integration
-
+  tests: true
+  allow-parallel-runners: true
 linters:
-  enable-all: true
-  fast: false
+  default: all
   disable:
-    - depguard # because I don't want to write a dedicated config file.
-    - exhaustruct # I want to use zero values... and sometime leave a field uninitialised, because it'll be later.
-    - gochecknoglobals # I haven't made up my mind yet.
-    - gomnd # Should be fixed, there are around 30 left.
-    - gomoddirectives # I need to replace some imports (grpc, docker) for backwards compatibility.
-    - mnd # same as gomnd
-    - nonamedreturns # I haven't made up my mind yet.
-    - paralleltest # false positives
-    - wsl # not ready yet to commit to this
+    - depguard
+  settings:
+    cyclop:
+      max-complexity: 15
+    funlen:
+      lines: 110
+      statements: 70
+    goconst:
+      min-len: 2
+      min-occurrences: 2
+    gocritic:
+      enabled-tags:
+        - diagnostic
+        - experimental
+        - opinionated
+        - performance
+        - style
+    gocyclo:
+      min-complexity: 15
+    godot:
+      capital: true
+    govet:
+      disable:
+        - fieldalignment
+      settings:
+        printf:
+          funcs:
+            - (github.com/golangci/golangci-lint/pkg/logutils.Log).Infof
+            - (github.com/golangci/golangci-lint/pkg/logutils.Log).Warnf
+            - (github.com/golangci/golangci-lint/pkg/logutils.Log).Errorf
+            - (github.com/golangci/golangci-lint/pkg/logutils.Log).Fatalf
+    lll:
+      line-length: 140
+    misspell:
+      locale: UK
+    tagliatelle:
+      case:
+        rules:
+          json: snake
+    unparam:
+      check-exported: true
+    varnamelen:
+      min-name-length: 2
+    wsl:
+      allow-cuddle-declarations: true
+  exclusions:
+    generated: lax
+    rules:
+      - linters:
+          - bodyclose
+          - dupl
+          - errcheck
+          - funlen
+          - gochecknoglobals
+          - goconst
+          - gocritic
+          - gosec
+          - govet
+          - lll
+          - maintidx
+          - paralleltest
+          - revive
+          - unparam
+          - varnamelen
+          - wrapcheck
+        path: _test\.go
+      - linters:
+          - errcheck
+        path: testing
+      - linters:
+          - cyclop
+        path: (.+)_test\.go
+    paths:
+      - model
+      - tmp
+      - bin
+      - scripts
+      - third_party$
+      - builtin$
+      - examples$
+issues:
+  fix: true
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+        - prefix(github.com/ORGNAME)
+        - localmodule
+      custom-order: true
+    goimports:
+      local-prefixes:
+        - github.com/ORGNAME/REPONAME
+  exclusions:
+    generated: lax
+    paths:
+      - model
+      - tmp
+      - bin
+      - scripts
+      - third_party$
+      - builtin$
+      - examples$
